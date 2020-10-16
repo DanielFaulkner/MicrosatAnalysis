@@ -1,0 +1,77 @@
+Ver0.1 functions tidying:
+
+OpenFSA(filename) - return binary file object.
+# Opens file object and confirms file is compatible.
+	!!! Version 0.2 goal: Correct error handling.
+	DONE
+
+ReturnElement(directoryparsed, fileobject) - returns element
+# Used by ExtractFSA function - takes an entry from the ABI file and converts it from binary to it's original format.
+	!!! Version 0.2 goal: None (current code fairly reliable)
+	DONE
+	!!! Version 0.3 goal: Check/update any missing legacy data types
+
+ExtractFSA(FileObject, TagNameTuple) - returns dictionary of ABI file information
+# Extracts to a dictionary the requested fields passed in the tuple.
+	!!! Version 0.2 goal: None (current code fairly reliable)
+	DONE
+
+PeakGraph(fileobject)
+# Very simple function to plot a graph of the ABI data.
+	!!! Version 0.2 goal: None core function. No goal
+	DONE
+
+DetectPeaks(fileobject, PeakThreshold = 10, DataTag=0) - returns dictionary with information on the peak start and end locations.
+	!!! Version 0.2 goal: Merge with the below function (not called directly since below function completed)
+	DONE - REMOVED
+
+DetectPeaksIncHeight(fileobject, PeakThreshold = 10, DataTag=0) - returns dictionary with information on the peak start and end locations (using above function) and also includes the height of each peak and the location of the peak within the start/end.
+	!!! Version 0.2 goal: Merge with the above function
+	DONE - MERGED
+
+CreateBasepairScale(fileobject, markerfileobject, PeakThreshold=50, MarkerChannel = 'DATA105') - returns a dictionary with the above information plus scale.
+# Uses the above function to generate information on the marker dye. Then converts this into a scale which is added to the above functions information.
+	!!! Version 0.2 goal: Maybe change the output format
+	DONE - But more work could be done
+
+TablePadding(Size,String) - returns string of spaces.
+# Used to make the print outs to terminal line up neatly.
+	!!! Version 0.2 goal: Non core, no changes planned.
+	DONE
+
+AnalyseFile(DataFile, MarkerFile)
+# Displays the information on a file using the above functions.
+	!!! Version 0.2 goal: Non core, update.
+	DONE - Little to change (more of an example of use function)
+
+DataMaskingSimple(UnmaskedDict, SelectedRegionsDict, conversionscale=0) - returns trimmed dictionary
+	!!! Version 0.2 goal: Needs updating to work with 2 areas in the same channel
+	DONE - Updated to work with upto 3 regions
+	TODO - Make work with unlimited number of regions
+
+ConvertRegionsDict(SelectedRegionsDict,conversionscale) - returns dictionary of regions of interest converted from basepair numbers to the relative positioning used in the ABI file.
+	!!! Version 0.2 goal: Works well simple function, no change
+	DONE - No change needed (works with any sized dictionary already)
+
+ExportPeaksSimple(DataFile, MarkerFile, CSVFile)
+# Outputs a CSV file with information from a single file.
+	!!! Version 0.2 goal: Pretty much replaced with multi file version. Remove
+	DONE - Replaced with version that shares code with the multi file export
+
+MultiFileExportSimple(directory=os.getcwd(), MarkerFile='MarkersLIZ500.txt', CSVFile='MultiTest.csv', SelectedRegionsDict=0)
+# Exports the information from multiple files to a CSV file. Similar to the Export Simple function, but can also trim the data to a specific region.
+	!!! Version 0.2 goal: Optionally change the output structure so easier to sort.
+	DONE - Moved the shared code into different functions.
+	TODO - Improve the output format so easier to sort in spreadsheet application.
+
+
+Version 0.2:
+Support unlimited regions
+More choice in output column formatting
+A comprehensive output as well as a simple output (Inc Start, End and Height)
+Add colony software export function.
+Investigate primary component analysis (PCA).
+Maybe start an easier interface or config file setup.
+
+Peak Detection improvements - Add minimum height (from start value) to be considered a peak (to remove peaks of only 2 or 3 points).
+Peak Detection improvements - Add detection of peaks within peaks.
